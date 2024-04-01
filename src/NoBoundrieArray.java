@@ -1,56 +1,60 @@
-import java.sql.Array;
 import java.util.Scanner;
 
 public class NoBoundrieArray {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int[] tempArray = new int[5];
+        int currentNumOfArrayMembers = 5;
+        int[] tempArray = new int[currentNumOfArrayMembers];
         int maxLenghtCounter = 0;
         int biggestCurrentNumber = Integer.MIN_VALUE;
         int secondBiggestCurrentNumber = Integer.MIN_VALUE;
         int smallestCurrentNumber = Integer.MAX_VALUE;
         int smallestDiff = Integer.MAX_VALUE;
-        for (int i = 0; i < tempArray.length; i++) {
-            //   System.out.println("ENTER  "+i+"  :");
-            System.out.println("ENTER number " + i + " and enter X for exiting process");
+        int index = 0; // Index to keep track of where to insert user input
 
-            //    Character exitParameter = scanner.next().charAt(0);
-            //if (exitParameter == 'x') break;
-            maxLenghtCounter++;
-            //time to extend our array
-            if (maxLenghtCounter > tempArray.length) {
+        //till user enters 0
+        while (true) {
+            System.out.println("ENTER number " + index + " and enter 0 for exiting process");
+            int givenInputFromKeyboard = scanner.nextInt();
 
-            } else {
-                //temp array is enough
-                int givenInputFromKeyboard = scanner.nextInt();
-                tempArray[i] = givenInputFromKeyboard;
-                if (tempArray[i] < smallestCurrentNumber) smallestCurrentNumber = tempArray[i];
-                if (tempArray[i] > biggestCurrentNumber) biggestCurrentNumber = tempArray[i];
-
-
+            // Check if user wants to exit
+            if (givenInputFromKeyboard == 0) {
+                break;
             }
 
+         //double  size if needed
+            if (index >= tempArray.length) {
+                currentNumOfArrayMembers = currentNumOfArrayMembers * 2;
+                int[] newArray = new int[currentNumOfArrayMembers];
+                System.arraycopy(tempArray, 0, newArray, 0, tempArray.length);
+                tempArray = newArray;
+            }
+
+            // save input in the array and update statistics
+            tempArray[index] = givenInputFromKeyboard;
+            if (givenInputFromKeyboard < smallestCurrentNumber) smallestCurrentNumber = givenInputFromKeyboard;
+            if (givenInputFromKeyboard > biggestCurrentNumber) biggestCurrentNumber = givenInputFromKeyboard;
+
+            index++; // next index
         }
+        scanner.close();
+
         System.out.println(smallestCurrentNumber + "   " + biggestCurrentNumber);
-        int biggestDifrence = biggestCurrentNumber - smallestCurrentNumber;
-        System.out.println("biggest diff:" + biggestDifrence);
+        int biggestDifference = biggestCurrentNumber - smallestCurrentNumber;
+        System.out.println("biggest diff:" + biggestDifference);
 
-        //smallest diff calculator
-        //evrey number sub evreynummber
-        for (int i = 0; i < tempArray.length; i++) {
-            for (int j = i + 1; j < tempArray.length; j++) {
-                // Calculate the absolute difference between the current pair of numbers
+        // Smallest difference calculator
+        for (int i = 0; i < index; i++) {
+            for (int j = i + 1; j < index; j++) {
                 int difference = Math.abs(tempArray[i] - tempArray[j]);
-
-                // Update the minimum difference if the current difference is smaller
                 if (difference < smallestDiff) {
                     smallestDiff = difference;
                 }
             }
         }
         System.out.println("smallest diff : " + smallestDiff);
-        // 1 8 19 55 41 22
-
-
+        for (int i = 0;i<tempArray.length;i++){
+        System.out.print(tempArray[i]+" , ");}
     }
+
 }
