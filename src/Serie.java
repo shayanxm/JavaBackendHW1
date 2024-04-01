@@ -28,6 +28,7 @@ public class Serie {
         int endOfBigestIncreasingSequence = 0;
 
         int previousNumber = Integer.MIN_VALUE;
+        int tempBeginningHolder = -1;
 
         // Iterate over each number in the input string
         for (int i = 0; i < nummbersUnSortedX.length(); i++) {
@@ -40,19 +41,23 @@ public class Serie {
                 i++;
             }
             currentNumber = Integer.parseInt(concatenated.toString());
-
             // Check if the current number is greater than the previous number
             if (currentNumber >= previousNumber) {
                 maxLenghtOfseriesTemp++;
+                if (tempBeginningHolder == -1) {
+                    tempBeginningHolder = currentNumber;
+                }
 
                 // Check if the current increasing sequence is the longest so far
                 if (maxLenghtOfseriesTemp > maxLenghtOfseriesOfAlltime) {
                     maxLenghtOfseriesOfAlltime = maxLenghtOfseriesTemp;
-                    beginngOfBigestIncreasingSequence = currentNumber - maxLenghtOfseriesTemp + 1;
+                    beginngOfBigestIncreasingSequence = tempBeginningHolder;
                     endOfBigestIncreasingSequence = currentNumber;
+
                 }
             } else {
                 maxLenghtOfseriesTemp = 1;
+                tempBeginningHolder = currentNumber;
             }
 
             // Update the previous number
@@ -60,7 +65,7 @@ public class Serie {
         }
 
         System.out.println("Max length of increasing series: " + maxLenghtOfseriesOfAlltime);
-        System.out.println("Starting number of the longest increasing series: " + endOfBigestIncreasingSequence);
+        System.out.println("Starting number of the longest increasing series: " + beginngOfBigestIncreasingSequence);
         System.out.println("Ending number of the longest increasing series: " + endOfBigestIncreasingSequence);
     }
 }
@@ -69,3 +74,5 @@ public class Serie {
 //bozorgtarin add bozorgtarin serie
 //bigest moshkel ine add badi o neshon mide wtf
 
+
+//sometimes works not right.
